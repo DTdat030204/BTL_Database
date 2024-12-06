@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ứng dụng MVC</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Chào mừng đến với ứng dụng của bạn!</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Danh sách đơn hàng</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Mã đơn hàng</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng giá trị</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (orders && orders.length > 0) { %>
+            <% orders.forEach(order => { %>
+              <tr>
+                <td><%= order.MaDonHang %></td>
+                <td><%= order.KhachHang %></td>
+                <td><%= order.NgayDat %></td>
+                <td><%= order.TongGiaTri %></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="4">Không có đơn hàng nào!</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <p>© 2024 Ứng dụng của bạn</p>
+  </footer>
+</body>
+</html>
