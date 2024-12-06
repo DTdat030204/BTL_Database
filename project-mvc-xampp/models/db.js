@@ -1,13 +1,18 @@
-const { Sequelize } = require('sequelize');
+const mysql = require('mysql2');
 
-// Kết nối đến cơ sở dữ liệu
-const sequelize = new Sequelize('btl_database', 'root', '', {
+const db = mysql.createConnection({
   host: 'localhost',
-  dialect: 'mysql'
+  user: 'root',
+  password: '',  
+  database: 'btl_csdl' 
 });
 
-sequelize.authenticate()
-  .then(() => console.log('Kết nối thành công!'))
-  .catch(err => console.error('Lỗi kết nối:', err));
+db.connect((err) => {
+  if (err) {
+    console.error('Không thể kết nối đến cơ sở dữ liệu: ', err);
+    process.exit(1);
+  }
+  console.log('Kết nối đến MySQL thành công.');
+});
 
-module.exports = sequelize;
+module.exports = db;
