@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const authenticateToken = require('../helper/authMiddleware');
 
-router.get('/', adminController.getNumberProductSoldbyId);
+router.get('/',authenticateToken, adminController.getNumberProductSoldbyId);
 
-router.get('/rating', adminController.getRating);
+router.get('/rating',authenticateToken, adminController.getRating);
 
+
+router.post('/login', adminController.loginAdmin);
+
+router.post('/logout', adminController.logoutAdmin);
 
 module.exports = router;
+

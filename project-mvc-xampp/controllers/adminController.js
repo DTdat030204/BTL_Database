@@ -1,4 +1,39 @@
 const db = require('../models/db'); 
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.JWT_SECRET;
+
+const loginAdmin = (req, res) => {
+   const { maAdmin } = req.body;
+  if (!maAdmin) {
+    return res.status(400).json({ error: 'Mã Admin là bắt buộc' });
+  }
+  db.query('SELECT * FROM Admin WHERE MaAdmin = ?', [maAdmin], (err, results) => {
+    if (err) {
+      console.error('Lỗi khi đăng nhập:', err);
+      return res.status(500).json({ error: 'Lỗi hệ thống' });
+    }
+    if (results.length === 0) {
+      return res.status(401).json({ error: 'Admin không tồn tại' });
+    }
+    const token = jwt.sign(
+        { maAdmin, role: 'admin' }, 
+        SECRET_KEY,
+        { expiresIn: '1h' }
+      );
+    res.cookie('token', token, { httpOnly: true, secure: false , maxAge: 3600000 }); 
+    res.status(200).json({ message: 'Đăng nhập thành công' });
+  });
+};
+
+
+
+
+const logoutAdmin = (req, res) => {
+    res.clearCookie('token'); 
+    res.status(200).json({ message: 'Đăng xuất thành công' });
+};
+
+
 
 const getNumberProductSoldbyId = (req, res) => {
     const { MaNguoiBan } = req.body;
@@ -54,5 +89,7 @@ const getRating = (req, res) => {
 
 module.exports = {
     getNumberProductSoldbyId,
-    getRating
+    getRating,
+    loginAdmin,
+    logoutAdmin
 };
