@@ -65,45 +65,6 @@ const getNumberProductSoldbyId = (req, res) => {
 };
 
 
-// const getNumberProductSoldbyId = (req, res) => {
-//     const { MaNguoiBan } = req.body;
-
-//     if (!MaNguoiBan) {
-//         return res.status(400).json({ message: 'Mã người bán không được để trống' });
-//     }
-
-//     const query = 'SELECT TinhSoLuongSanPhamDaBan(?) AS SoLuongDaBan';
-
-//     db.execute(query, [MaNguoiBan], (err, results) => {
-//         if (err) {
-//             console.error('Lỗi khi gọi hàm: ', err);
-//             return res.status(500).json({ message: 'Lỗi khi truy vấn cơ sở dữ liệu' });
-//         }
-
-//         const SoLuongDaBan = results[0]?.SoLuongDaBan;
-
-//         if (SoLuongDaBan !== null && SoLuongDaBan > 0) {
-//             const query2 = 'CALL LayThongTinSanPhamDaBan(?)';
-//             db.execute(query2, [MaNguoiBan], (err, results2) => {
-//                 if (err) {
-//                     console.error('Lỗi khi gọi thủ tục lấy chi tiết sản phẩm: ', err);
-//                     return res.status(500).json({ message: 'Lỗi khi truy vấn cơ sở dữ liệu' });
-//                 }
-
-//                 const productDetails = results2[0];
-
-//                 return res.json({ SoLuongDaBan, productDetails });
-//             });
-//             return res.json({ SoLuongDaBan });
-//         } else {
-//             return res.json({ message: 'Không có sản phẩm hoặc không tồn tại người bán.' });
-//         }
-//     });
-// };
-
-
-
-
 const getRating = (req, res) => {
     const { MaCuaHang } = req.body;  
 
