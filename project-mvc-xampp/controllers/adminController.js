@@ -129,9 +129,31 @@ const getRating = (req, res) => {
 };
 
 
+
+const getAllStoreRatings = (req, res) => {
+    const query = 'CALL LayDanhSachCuaHangVaSoSao()';
+
+    db.execute(query, (err, results) => {
+        if (err) {
+            console.error('Lỗi khi gọi thủ tục: ', err);
+            return res.status(500).json({ message: 'Lỗi khi truy vấn cơ sở dữ liệu' });
+        }
+        const stores = results[0];
+
+        if (stores.length > 0) {
+            res.json({ stores });
+        } else {
+            res.json({ message: 'Không có cửa hàng nào trong cơ sở dữ liệu.' });
+        }
+    });
+};
+
+
+
 module.exports = {
     getNumberProductSoldbyId,
     getRating,
     loginAdmin,
-    logoutAdmin
+    logoutAdmin,
+    getAllStoreRatings
 };

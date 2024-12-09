@@ -12,5 +12,7 @@ router.post('/login', adminController.loginAdmin);
 
 router.post('/logout', adminController.logoutAdmin);
 
+router.get('/getAllStoreRatings',authenticateToken, adminController.getAllStoreRatings);
+
 module.exports = router;
 
